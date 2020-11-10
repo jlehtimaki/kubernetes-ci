@@ -11,13 +11,14 @@ ENV GOARCH=$TARGETARCH
 
 WORKDIR /build
 COPY . .
-RUN cd cmd/drone && go build -o /build/drone-kubernetes
+RUN cd cmd && go build -o /build/kubernetes-ci
 
 # Kubectl, awscli and kustomize binaries
 FROM --platform=$BUILDPLATFORM ubuntu:20.04 AS executables
 ARG TARGETARCH
 ARG BUILDPLATFORM
 
+# Install necessary packages to fetch executable binaries
 WORKDIR /execs
 RUN apt update && apt install -y curl unzip bash
 
@@ -55,6 +56,6 @@ COPY --from=executables /execs/kustomize /bin/
 RUN ./install -b /bin/
 
 # Copy drone-kubernetes binary
-COPY --from=builder /build/drone-kubernetes /bin/
+COPY --from=builder /build/kubernetes-ci /bin/
 
-ENTRYPOINT ["/bin/drone-kubernetes"]
+ENTRYPOINT ["/bin/kubernetes-ci"]

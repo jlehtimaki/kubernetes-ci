@@ -1,119 +1,118 @@
 package main
 
 import (
-	s "github.com/jlehtimaki/kubernetes-ci/pkg/structs"
 	kci "github.com/jlehtimaki/kubernetes-ci"
-	"github.com/sirupsen/logrus"
-	"github.com/urfave/cli"
-	"os"
+s "github.com/jlehtimaki/kubernetes-ci/pkg/structs"
+"github.com/sirupsen/logrus"
+"github.com/urfave/cli/v2"
+"os"
 )
 
-var revision string // build number set at compile-time
 
 func main() {
 	app := cli.NewApp()
 	app.Name = "kubernetes plugin"
 	app.Usage = "kubernetes plugin"
 	app.Action = run
-	app.Version = revision
 	app.Flags = []cli.Flag{
 
 		//
 		// plugin args
 		//
 
-		cli.StringSliceFlag{
+		&cli.StringSliceFlag{
 			Name:   "actions",
 			Usage:  "a list of actions to have kubectl perform",
-			EnvVar: "PLUGIN_ACTIONS",
-			Value:  &cli.StringSlice{"diff"},
+			EnvVars: []string{"PLUGIN_ACTIONS","ACTIONS"},
+			Required: true,
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "type",
 			Usage:  "A Type of Kubernetes deployment. eg. EKS, GKE, Baremetal",
-			EnvVar: "PLUGIN_TYPE",
+			EnvVars: []string{"PLUGIN_TYPE", "TYPE"},
 			Value:  "Baremetal",
+			Required: true,
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "k8s_ca",
 			Usage:  "CA Certificate to Kubernetes",
-			EnvVar: "PLUGIN_CA",
+			EnvVars: []string{"PLUGIN_CA", "CA"},
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "k8s_token",
 			Usage:  "Token to Kubernetes",
-			EnvVar: "PLUGIN_TOKEN",
+			EnvVars: []string{"PLUGIN_TOKEN", "TOKEN"},
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "k8s_user",
 			Usage:  "Kubernetes user to authenticate",
-			EnvVar: "PLUGIN_K8S_USER",
+			EnvVars: []string{"PLUGIN_K8S_USER", "K8S_USER"},
 			Value:  "default",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "k8s_server",
 			Usage:  "Kubernetes server address",
-			EnvVar: "PLUGIN_K8S_SERVER",
+			EnvVars: []string{"PLUGIN_K8S_SERVER", "K8S_SERVER"},
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "assume_role",
 			Usage:  "A role to assume before running the awscli commands",
-			EnvVar: "PLUGIN_ASSUME_ROLE",
+			EnvVars: []string{"PLUGIN_ASSUME_ROLE", "ASSUME_ROLE"},
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "kubectl_version",
 			Usage:  "kubectl version number",
-			EnvVar: "PLUGIN_KUBECTL_VERSION",
+			EnvVars: []string{"PLUGIN_KUBECTL_VERSION", "KUBECTL_VERSION"},
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "cluster_name",
 			Usage:  "EKS Cluster Name",
-			EnvVar: "PLUGIN_CLUSTER_NAME",
+			EnvVars: []string{"PLUGIN_CLUSTER_NAME", "CLUSTER_NAME"},
 			Value:  "EKS-Cluster",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "manifest_dir",
 			Usage:  "Directory that holds manifests",
-			EnvVar: "PLUGIN_MANIFEST_DIR",
+			EnvVars: []string{"PLUGIN_MANIFEST_DIR", "MANIFEST_DIR"},
 			Value:  "./",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "kubernetes_namespace",
 			Usage:  "Namespace for Kubernetes",
-			EnvVar: "PLUGIN_NAMESPACE",
+			EnvVars: []string{"PLUGIN_NAMESPACE", "NAMESPACE"},
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "aws_region",
 			Usage:  "AWS Region to use",
-			EnvVar: "AWS_REGION",
+			EnvVars: []string{"AWS_REGION", "AWS_REGION"},
 			Value:  "eu-west-1",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "kustomize",
 			Usage:  "To use kustomize",
-			EnvVar: "PLUGIN_KUSTOMIZE",
+			EnvVars: []string{"PLUGIN_KUSTOMIZE", "KUSTOMIZE"},
 			Value:  "false",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "image.version",
 			Usage:  "Version to be deployed",
-			EnvVar: "PLUGIN_IMAGE_VERSION",
+			EnvVars: []string{"PLUGIN_IMAGE_VERSION", "IMAGE_VERSION"},
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "image.name",
 			Usage:  "Image name to be changed",
-			EnvVar: "PLUGIN_IMAGE",
+			EnvVars: []string{"PLUGIN_IMAGE", "IMAGE"},
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "rolloutCheck",
 			Usage:  "Checking rollout status",
-			EnvVar: "PLUGIN_ROLLOUT_CHECK",
+			EnvVars: []string{"PLUGIN_ROLLOUT_CHECK", "ROLLOUT_CHECK"},
 			Value:  "true",
 		},
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:   "rolloutTimeout",
 			Usage:  "Timeout of rollout",
-			EnvVar: "PLUGIN_ROLLOUT_TIMEOUT",
+			EnvVars: []string{"PLUGIN_ROLLOUT_TIMEOUT", "ROLLOUT_TIMEOUT"},
 			Value:  "1m",
 		},
 	}
