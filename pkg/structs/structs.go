@@ -10,6 +10,8 @@ type (
 		K8SCert       string
 		K8SToken      string
 		K8SUser       string
+		GoogleSA	  string
+		GoogleProjectID string
 	}
 
 	// Kube holds inputs for kubernetes commands and configuration

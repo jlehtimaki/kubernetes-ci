@@ -5,6 +5,7 @@ import (
 	backend "github.com/jlehtimaki/kubernetes-ci/pkg/backends"
 	"github.com/jlehtimaki/kubernetes-ci/pkg/backends/aws"
 	"github.com/jlehtimaki/kubernetes-ci/pkg/backends/baremetal"
+	"github.com/jlehtimaki/kubernetes-ci/pkg/backends/google"
 	k "github.com/jlehtimaki/kubernetes-ci/pkg/kubernetes"
 	s "github.com/jlehtimaki/kubernetes-ci/pkg/structs"
 	"github.com/sirupsen/logrus"
@@ -54,15 +55,23 @@ func (p Plugin) Exec() error {
 
 	// Set the backend provider
 	var b backend.Backend
+	var err error
 	switch p.Kube.Type {
 	case "EKS":
-		fmt.Println("Using EKS type of Kubernetes settings")
-		b = aws.NewAWSBackend(p.Config, p.Kube)
+		fmt.Println("Using EKS type of Kubernetes")
+		b, err = aws.NewAWSBackend(p.Config, p.Kube)
 	case "Baremetal":
-		fmt.Println("Using Baremetal type of Kubernetes settings")
-		b = baremetal.NewBaremetalBackend(p.Config, p.Kube)
+		fmt.Println("Using Baremetal type of Kubernetes")
+		b, err = baremetal.NewBaremetalBackend(p.Config, p.Kube)
+	case "GKE":
+		fmt.Println("Using GKE type of Kubernetes")
+		b, err = google.NewGoogleBackend(p.Config, p.Kube)
 	default:
 		log.Fatalf("unknown backend: %s", p.Kube.Type)
+	}
+
+	if err != nil {
+		return err
 	}
 
 	// Login to backend

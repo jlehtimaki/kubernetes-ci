@@ -66,9 +66,8 @@ func main() {
 		},
 		&cli.StringFlag{
 			Name:   "cluster_name",
-			Usage:  "EKS Cluster Name",
+			Usage:  "Kubernetes Cluster Name",
 			EnvVars: []string{"PLUGIN_CLUSTER_NAME", "CLUSTER_NAME"},
-			Value:  "EKS-Cluster",
 		},
 		&cli.StringFlag{
 			Name:   "manifest_dir",
@@ -82,10 +81,9 @@ func main() {
 			EnvVars: []string{"PLUGIN_NAMESPACE", "NAMESPACE"},
 		},
 		&cli.StringFlag{
-			Name:   "aws_region",
-			Usage:  "AWS Region to use",
-			EnvVars: []string{"AWS_REGION", "AWS_REGION"},
-			Value:  "eu-west-1",
+			Name:   "region",
+			Usage:  "Region/Zone to use",
+			EnvVars: []string{"AWS_REGION", "AWS_REGION","REGION","ZONE"},
 		},
 		&cli.StringFlag{
 			Name:   "kustomize",
@@ -115,6 +113,16 @@ func main() {
 			EnvVars: []string{"PLUGIN_ROLLOUT_TIMEOUT", "ROLLOUT_TIMEOUT"},
 			Value:  "1m",
 		},
+		&cli.StringFlag{
+			Name:   "googleProjectID",
+			Usage:  "Google Project ID",
+			EnvVars: []string{"PLUGIN_GOOGLE_PROJECT_ID", "GOOGLE_PROJECT_ID"},
+		},
+		&cli.StringFlag{
+			Name:   "googleSA",
+			Usage:  "Google SA JSON data",
+			EnvVars: []string{"PLUGIN_GOOGLE_SA", "GOOGLE_SA"},
+		},
 	}
 
 	if err := app.Run(os.Args); err != nil {
@@ -126,11 +134,13 @@ func run(c *cli.Context) error {
 	plugin := kci.Plugin{
 		Config: s.Config{
 			RoleARN:       c.String("assume_role"),
-			Region:        c.String("aws_region"),
+			Region:        c.String("region"),
 			ServerAddress: c.String("k8s_server"),
 			K8SUser:       c.String("k8s_user"),
 			K8SCert:       c.String("k8s_ca"),
 			K8SToken:      c.String("k8s_token"),
+			GoogleProjectID: c.String("googleProjectID"),
+			GoogleSA: 		c.String("googleSA"),
 		},
 		Kube: s.Kube{
 			Type:           c.String("type"),

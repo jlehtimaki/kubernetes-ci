@@ -1,6 +1,7 @@
 package aws
 
 import (
+	"fmt"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -19,11 +20,21 @@ type AWSBackend struct {
 	backend.BaseBackend
 	Config	s.Config
 	Kube	s.Kube
+	AWSAccessKey string
+	AWSSecretAccessKey string
 }
 
-func NewAWSBackend(config s.Config, kube s.Kube) *AWSBackend {
-	backend := &AWSBackend{Config: config, Kube: kube}
-	return backend
+func NewAWSBackend(config s.Config, kube s.Kube) (*AWSBackend, error){
+	backend := &AWSBackend{
+		Config: config,
+		Kube: kube,
+		AWSAccessKey: os.Getenv("AWS_ACCESS_KEY_ID"),
+		AWSSecretAccessKey: os.Getenv("AWS_SECRET_ACCESS_KEY"),
+	}
+	if backend.AWSSecretAccessKey == "" || backend.AWSAccessKey == "" {
+		return nil, fmt.Errorf("missing configuration parameters for EKS")
+	}
+	return backend, nil
 }
 
 func (b *AWSBackend) Login() []*exec.Cmd {

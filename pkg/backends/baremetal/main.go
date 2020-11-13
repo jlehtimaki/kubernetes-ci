@@ -16,9 +16,12 @@ type BaremetalBackend struct {
 	Kube	s.Kube
 }
 
-func NewBaremetalBackend(config s.Config, kube s.Kube) *BaremetalBackend {
+func NewBaremetalBackend(config s.Config, kube s.Kube) (*BaremetalBackend, error) {
 	backend := &BaremetalBackend{Config: config, Kube: kube}
-	return backend
+	if backend.Config.K8SUser == "" || backend.Config.K8SCert == "" || backend.Config.K8SToken == "" || backend.Config.ServerAddress == "" {
+		return nil, fmt.Errorf("missing configuration parameters for baremetal")
+	}
+	return backend, nil
 }
 
 func (b *BaremetalBackend) Login() []*exec.Cmd {
