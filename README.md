@@ -7,11 +7,17 @@ Kubernetes-CI uses Environment variables to do `kubectl` tasks automatically wit
 | ------------  |:----:     |:---------:|:-----------:  |
 | AMD64         | EKS       | Yes       | --            |
 | ARMv8         | EKS       | No        | --            |
+| AMD64         | GKE       | Yes       | --            |
+| ARMv8         | GKE       | No        | --            |
 | AMD64         | Baremetal | Yes       | --            |
-| ARMv8         | Baremetal | No        | Can use just plain kubectl commands due to ARM restrictions, will be fixed in the future| 
+| ARMv8         | Baremetal | No        | --            |
+
+> Note: Currently Kustomize cannot be utilised with ARMv8 architecture due to Kustomize being built only for AMD64
+> Hopefully this will be fixed in the future! 
 
 ## Supported CI's
-Here's a list with tested CI's and examples how to use kubernetes-ci with them.
+Here's a list with tested CI's and examples how to use kubernetes-ci with them. \
+This plugin should work with every CI that allows you to run custom containers with ENV variables.
 - [Drone](docs/drone/README.md)
 
 ## Supported environment paramenters
