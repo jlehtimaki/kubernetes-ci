@@ -14,6 +14,7 @@ import (
 	"os/exec"
 	"strings"
 )
+
 type (
 	// Plugin represents the plugin instance to be executed
 	Plugin struct {
@@ -24,8 +25,8 @@ type (
 
 var (
 	allowedCommands = []string{"apply", "delete", "diff"}
-	kubeExe = "kubectl"
-	kustomizeExe = "kustomize"
+	kubeExe         = "kubectl"
+	kustomizeExe    = "kustomize"
 )
 
 func allowedCommand(command string) bool {
@@ -75,7 +76,7 @@ func (p Plugin) Exec() error {
 	}
 
 	// Login to backend
-	commands = append(commands,b.Login()...)
+	commands = append(commands, b.Login()...)
 
 	// Set version with Kustomize
 	if p.Kube.AppVersion != "" {

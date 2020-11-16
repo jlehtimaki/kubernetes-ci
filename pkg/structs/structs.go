@@ -3,14 +3,14 @@ package structs
 type (
 	// Config holds input parameters for the plugin
 	Config struct {
-		Sensitive     bool
-		RoleARN       string
-		Region        string
-		ServerAddress string
-		K8SCert       string
-		K8SToken      string
-		K8SUser       string
-		GoogleSA	  string
+		Sensitive       bool
+		RoleARN         string
+		Region          string
+		ServerAddress   string
+		K8SCert         string
+		K8SToken        string
+		K8SUser         string
+		GoogleSA        string
 		GoogleProjectID string
 	}
 
@@ -28,5 +28,4 @@ type (
 		Rollout        string
 		RolloutTimeout string
 	}
-
 )

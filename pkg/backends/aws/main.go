@@ -18,17 +18,17 @@ const awsCliExe = "aws"
 
 type AWSBackend struct {
 	backend.BaseBackend
-	Config	s.Config
-	Kube	s.Kube
-	AWSAccessKey string
+	Config             s.Config
+	Kube               s.Kube
+	AWSAccessKey       string
 	AWSSecretAccessKey string
 }
 
-func NewAWSBackend(config s.Config, kube s.Kube) (*AWSBackend, error){
+func NewAWSBackend(config s.Config, kube s.Kube) (*AWSBackend, error) {
 	backend := &AWSBackend{
-		Config: config,
-		Kube: kube,
-		AWSAccessKey: os.Getenv("AWS_ACCESS_KEY_ID"),
+		Config:             config,
+		Kube:               kube,
+		AWSAccessKey:       os.Getenv("AWS_ACCESS_KEY_ID"),
 		AWSSecretAccessKey: os.Getenv("AWS_SECRET_ACCESS_KEY"),
 	}
 	if backend.AWSSecretAccessKey == "" || backend.AWSAccessKey == "" {

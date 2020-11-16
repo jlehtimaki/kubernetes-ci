@@ -12,8 +12,8 @@ var (
 )
 
 type BaremetalBackend struct {
-	Config 	s.Config
-	Kube	s.Kube
+	Config s.Config
+	Kube   s.Kube
 }
 
 func NewBaremetalBackend(config s.Config, kube s.Kube) (*BaremetalBackend, error) {
