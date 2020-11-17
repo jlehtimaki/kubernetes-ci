@@ -25,9 +25,9 @@ This plugin should work with every CI that allows you to run custom containers w
 | -------------         |:-------------:                |:-------------:|:-------------:|:-------------: |
 | AWS_ACCESS_KEY        | AWS Access key                | YES           | -             | -              |
 | AWS_SECRET_KEY        | AWS Access key secret         | YES           | -             | -              |
-| AWS_REGION            | AWS Region                    | NO            | eu-west-1     | -              |
+| REGION                | Region / Zone                    | NO            | eu-west-1     | -              |
 | ASSUME_ROLE           | AWS Assume role               | NO            | -             | Role ARN       |
-| ACTIONS               | AWS Client command to be run  | YES           | test          | apply/delete/diff|
+| ACTIONS               | Kubectl commands to be run  | YES           | test          | apply/delete/diff|
 | KUBECTL_VERSION       | Kubectl version to be installed| NO           | v1.8.3        | -              |
 | NAMESPACE             | Kubernetes namespace          | NO            | default       | -              |
 | CLUSTER_NAME          | EKS Cluster name              | NO            | EKS-Cluster   | -              |
