@@ -19,6 +19,7 @@ Kubernetes-CI uses Environment variables to do `kubectl` tasks automatically wit
 Here's a list with tested CI's and examples how to use kubernetes-ci with them. \
 This plugin should work with every CI that allows you to run custom containers with ENV variables.
 - [Drone](docs/drone/README.md)
+- [Github Actions](docs/github-actions/README.md)
 
 ## Supported environment paramenters
 | Paramenter            | Description                   |Required       | Default Value | Allowed Values |
@@ -60,7 +61,11 @@ docker buildx build -f docker/Dockerfile --platform linux/amd64,linux/arm64/v8 -
 ```
 
 ## Usage
+### Basic usage
 ```
-docker run --rm -it -e AWS_ACCESS_KEY=.... -e PLUGIN_ASSUME_ROLE=.... -e AWS_SECRET_KEY=.... 
--e PLUGIN_ACTIONS="apply" -e PLUGIN_MANIFEST_DIR="manifests/" lehtux/drone-kubernetes
+docker run --rm -it -e AWS_ACCESS_KEY=.... -e ASSUME_ROLE=.... -e AWS_SECRET_KEY=.... 
+-e ACTIONS="apply" -e MANIFEST_DIR="manifests/" quay.io/jlehtimaki/kubernetes-ci
 ```
+
+### Github Actions
+[README](docs/github-actions/README.md)
