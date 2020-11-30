@@ -1,0 +1,12 @@
+name: 'Kubernetes CI'
+description: 'Deploy with Kubernetes CI'
+inputs:
+  type:  # id of input
+    description: 'Type of Kubernetes Cluster'
+    required: true
+    default: 'GKE'
+runs:
+  using: 'docker'
+  image: 'cmd/github-actions/Dockerfile'
+  args:
+    - ${{ inputs.type }}
