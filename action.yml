@@ -5,10 +5,76 @@ inputs:
     description: 'Type of Kubernetes Cluster'
     required: true
   actions:
-    description: 'Kubectl commands'
+    description: 'List of actions to have kubectl perform'
     required: true
+  k8s_ca:
+    description: CA Certificate to Kubernete
+    required: false
+  k8s_token:
+    description: 'Token to Kubernetes'
+    required: false
+  k8s_user:
+    description: 'Kubernetes user to authenticate'
+    required: false
+  assume_role:
+    description: 'A role to assume before running the awscli commands'
+    required: false
+  kubectl_version:
+    description: 'kubectl version number'
+    required: false
+  cluster_name:
+    description: 'Kubernetes Cluster Name'
+    required: true
+  manifest_dir:
+    description: 'Directory that holds manifests'
+    required: false
+  kubernetes_namespace:
+    description: 'Namespace for Kubernetes'
+    required: false
+  region:
+    description: 'Region/Zone to use'
+    required: false
+  kustomize:
+    description: 'To use kustomize'
+    required: false
+  image_version:
+    description: 'Version to be deployed'
+    required: false
+  image_name:
+    description: 'Image name to be changed'
+    required: false
+  rolloutCheck:
+    description: 'Checking rollout status'
+    required: false
+  rolloutTimeout:
+    description: 'Timeout of rollout'
+    required: false
+  googleProjectID:
+    description: 'Google Project ID'
+    required: false
+  googleSA:
+    description: 'Google SA JSON data'
+    required: false
 runs:
   using: 'docker'
   image: 'cmd/github-actions/Dockerfile'
   args:
-    - --type=${{ inputs.type }}
+    - --type ${{ inputs.type }}
+    - --k8s_ca ${{ inputs.k8s_ca }}
+    - --k8s_token ${{ inputs.k8s_token }}
+    - --k8s_user ${{ inputs.k8s_user }}
+    - --k8s_server ${{ inputs.k8s_server }}
+    - --assume_role ${{ inputs.assume_role }}
+    - --kubectl_version ${{ inputs.kubectl_version }}
+    - --cluster_name ${{ inputs.cluster_name }}
+    - --manifest_dir ${{ inputs.manifest_dir }}
+    - --kubernetes_namespace ${{ inputs.kubernetes_namespace }}
+    - --region ${{ inputs.region }}
+    - --kustomize ${{ inputs.kustomize }}
+    - --image.version ${{ inputs.image_version }}
+    - --image.name ${{ inputs.image_name }}
+    - --rolloutCheck ${{ inputs.rolloutCheck }}
+    - --rolloutTimeout ${{ inputs.rolloutTimeout }}
+    - --googleProjectID ${{ inputs.googleProjectID }}
+    - --googleSA ${{ inputs.googleSA }}
+    - --actions ${{ inputs.actions }}
