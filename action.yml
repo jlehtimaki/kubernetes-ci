@@ -1,10 +1,12 @@
 name: 'Kubernetes CI'
 description: 'Deploy with Kubernetes CI'
 inputs:
-  type:  # id of input
+  type:
     description: 'Type of Kubernetes Cluster'
     required: true
-    default: 'GKE'
+  actions:
+    description: 'Kubectl commands'
+    required: true
 runs:
   using: 'docker'
   image: 'cmd/github-actions/Dockerfile'
