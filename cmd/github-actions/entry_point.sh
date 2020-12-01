@@ -1,8 +1,5 @@
 #! /usr/bin/env bash
 
-set -Eeuo pipefail
-set -x
-
 # Convert actions to multiple actions
 opts=""
 IFS=","
@@ -22,4 +19,5 @@ done
 # Run the script
 if [ "$0" = "${BASH_SOURCE[*]}" ] ; then
   >&2 echo -E "\nRunning Kubernetes-CI...\n"
+  /bin/kubernetes-ci $opts
 fi
