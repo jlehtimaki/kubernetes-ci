@@ -1,5 +1,5 @@
 # Building the drone-kubernetes
-FROM --platform=$BUILDPLATFORM golang:1.14-alpine AS builder
+FROM --platform=$BUILDPLATFORM golang:1.15-alpine AS builder
 
 ARG BUILDPLATFORM
 ARG TARGETARCH
@@ -23,7 +23,7 @@ WORKDIR /execs
 RUN apt update && apt install -y curl unzip bash
 
 # Fetch Kubectl
-RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.18.3/bin/linux/$TARGETARCH/kubectl"
+RUN curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.14.5/bin/linux/$TARGETARCH/kubectl"
 RUN chmod +x kubectl
 
 # Fetch awscli installation
