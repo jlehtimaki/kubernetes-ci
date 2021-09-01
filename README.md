@@ -6,11 +6,11 @@ Kubernetes-CI uses Environment variables to do `kubectl` tasks automatically wit
 | Architecture  | Type      | Kustomize | Other notes   |
 | ------------  |:----:     |:---------:|:-----------:  |
 | AMD64         | EKS       | Yes       | --            |
-| ARMv8         | EKS       | No        | --            |
+| ARMv8         | EKS       | Yes       | --            |
 | AMD64         | GKE       | Yes       | --            |
-| ARMv8         | GKE       | No        | --            |
+| ARMv8         | GKE       | Yes       | --            |
 | AMD64         | Baremetal | Yes       | --            |
-| ARMv8         | Baremetal | No        | --            |
+| ARMv8         | Baremetal | Yes       | --            |
 
 > Note: Currently Kustomize cannot be utilised with ARMv8 architecture due to Kustomize being built only for AMD64
 > Hopefully this will be fixed in the future! 

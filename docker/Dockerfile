@@ -35,7 +35,13 @@ RUN if [ "$TARGETARCH" == "arm64" ]; then \
 RUN unzip awscliv2.zip
 
 # Fetch kustomize
-RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+RUN if [ "$TARGETARCH" == "arm64" ]; then \
+      curl -sL "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v4.3.0/kustomize_v4.3.0_linux_amd64.tar.gz" -o "kustomize.tar.gz";  \
+    else \
+      curl -sL "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v4.3.0/kustomize_v4.3.0_linux_amd64.tar.gz" -o "kustomize.tar.gz"; \
+    fi
+
+RUN tar xvf kustomize.tar.gz
 
 # Actual drone-kubernetes docker image
 FROM --platform=$BUILDPLATFORM ubuntu:20.04
