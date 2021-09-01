@@ -35,11 +35,7 @@ RUN if [ "$TARGETARCH" == "arm64" ]; then \
 RUN unzip awscliv2.zip
 
 # Fetch kustomize
-RUN if [ "$TARGETARCH" == "arm64" ]; then \
-      curl -sL "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v4.3.0/kustomize_v4.3.0_linux_arm64.tar.gz" -o "kustomize.tar.gz";  \
-    else \
-      curl -sL "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v4.3.0/kustomize_v4.3.0_linux_amd64.tar.gz" -o "kustomize.tar.gz"; \
-    fi
+RUN curl -sL "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v4.3.0/kustomize_v4.3.0_linux_$TARGETARCH.tar.gz" -o "kustomize.tar.gz"
 
 RUN tar xvf kustomize.tar.gz
 
