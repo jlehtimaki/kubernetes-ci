@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v0.2.0
+Features:
+    - Support for ARM based kustomize binaries
 
 ## v0.1.1
 Updates:
